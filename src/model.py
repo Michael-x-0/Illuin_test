@@ -12,10 +12,10 @@ class IlluinNetwork(nn.Module):
       self.__device = torch.device("cpu")
     else:
       self.__device = device
-    self.embedding_model = embedding_model
+    self.embedding_model = embedding_model #model pour calculer l'embedding de chaque mot
     self.max_word = max_word
-    self.mean_layer = nn.Linear(max_word,1,dtype=float,bias=False)
-    self.mean_layer.weight.data.fill_(1)
+    self.mean_layer = nn.Linear(max_word,1,dtype=float,bias=False) #Couche entraînable qui permet de calculer la moyenne pondérée des scores
+    self.mean_layer.weight.data.fill_(1)  # on initialise à 1 pour calculer directemennt la moyenne
     self.proj = torch.from_numpy(np.identity(max_word)).to(self.__device)
 
   def to(self,device):
@@ -58,7 +58,7 @@ class IlluinNetwork(nn.Module):
     y = 0
     for x in N:
         x2 = min(x,self.max_word)
-        temp =self.mean_layer(self.proj[0:x2,:]) #(self.proj[0:x,:]@self.W)
+        temp =self.mean_layer(self.proj[0:x2,:]) 
         res+=[temp.T@(torch.sort(X[y:y+x,:],0, descending=True).values[0:x2,:])/torch.sum(temp)]
         y+=x
     return torch.concat(res)
