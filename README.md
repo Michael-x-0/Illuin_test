@@ -1,5 +1,5 @@
-### Install dependencies
-!pip installpip install compress-fasttext
+### Installation des dependences
+"!pip installpip install compress-fasttext"
 
 ### Présentation générale
 Consulter le notebook presentation.ipynb
