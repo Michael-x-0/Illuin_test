@@ -65,7 +65,7 @@ def main():
 
   print("loading dataset...")
   question_context,context = load_raw_data(file_name)
-  n = args.nombre[0] if args.nombre[0]!=None else test_pre_question_context.shape[0]
+  n = args.nombre[0] if args.nombre!=None else question_context.shape[0]
   print("preprocessing...")
   context['context'] = context['context'].apply(lambda x:preprocess(x))
   question_context = question_context.sample(n)
